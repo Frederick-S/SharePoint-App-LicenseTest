@@ -10,4 +10,4 @@ There are two key points:
 2. Set `Tenant` permission to `Full Control`.
 
 ## Check license with Office Store verification web service
-Make sure the app license token have not expired (the `te` attribute).
+Make sure the app license token have not expired (the `te` attribute), otherwise `SP.Utilities.Utility.getAppLicenseInformation` will return empty `SP.AppLicenseCollection`.
