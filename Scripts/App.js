@@ -1,4 +1,8 @@
 ﻿(function ($) {
+    function writeMessage(message) {
+        $('.message').append('<p>' + message + '</p>');
+    }
+
     function importTestLicense() {
         // Use the product id defined in AppManifest.xml
         var productId = '{55c923c8-3801-44b6-bb8a-2506dd320a1c}';
@@ -23,7 +27,8 @@
         SP.Utilities.Utility.importAppLicense(context, rawXMLLicenseToken, 'en-US', 'US', 'App Name', 'http://www.office.com', 'Provider Name', 5);
 
         context.executeQueryAsync(function (sender, args) {
-            console.log('License is imported successfully.');
+            writeMessage('License is imported successfully.');
+            writeMessage('Getting license token ...');
 
             var appLicenseCollection = SP.Utilities.Utility.getAppLicenseInformation(context, productId);
 
@@ -32,6 +37,8 @@
                     var rawXMLLicenseToken = appLicenseCollection.get_item(0).get_rawXMLLicenseToken();
                     var rawXMLLicenseTokenEncoded = encodeURIComponent(rawXMLLicenseToken);
 
+                    writeMessage('Verifying license token ...');
+
                     var verificationServiceUrl = "https://verificationservice.officeapps.live.com/ova/verificationagent.svc/rest/verify?token=";
                     var request = new SP.WebRequestInfo();
                     request.set_url(verificationServiceUrl + rawXMLLicenseTokenEncoded);
@@ -39,19 +46,22 @@
                     var response = SP.WebProxy.invoke(context, request);
                     context.executeQueryAsync(function () {
                         if (response.get_statusCode() == 200) {
-                            alert(response.get_body());
+                            writeMessage('Your license info is:');
+                            writeMessage($('<div/>').text(response.get_body()).html());
                         } else {
-                            alert(response.get_body());
+                            writeMessage(response.get_body());
                         }
                     }, function () {
-                        alert(response.get_body());
+                        writeMessage(response.get_body());
                     });
+                } else {
+                    writeMessage('No licene token is found.');
                 }
             }, function (sender, args) {
-                alert(args.get_message());
+                writeMessage(response.get_body());
             });
         }, function (sender, args) {
-            alert(args.get_message());
+            writeMessage(response.get_body());
         });
     }
 
