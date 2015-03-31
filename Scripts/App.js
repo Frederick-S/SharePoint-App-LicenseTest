@@ -1,4 +1,4 @@
-﻿(function ($) {
+﻿(function ($, SP) {
     function writeMessage(message) {
         $('.message').append('<p>' + message + '</p>');
     }
@@ -66,4 +66,4 @@
     }
 
     importTestLicense();
-})(jQuery);
+})(jQuery, SP);
