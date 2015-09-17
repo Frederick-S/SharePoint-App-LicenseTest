@@ -5,6 +5,9 @@
 
     function importTestLicense() {
         // Use the product id defined in AppManifest.xml
+        var start = new Date();
+        var end = start;
+        end.setDate(start.getDate() + 30);
         var productId = '{55c923c8-3801-44b6-bb8a-2506dd320a1c}';
         var rawXMLLicenseToken =
             '<r>' +
@@ -14,10 +17,10 @@
                 'cid="32F3E7FC559F4F49" ' +
                 'ts="30" ' +
                 'et="Trial" ' +
-                'ad="2015-03-01T16:49:34Z" ' +
-                'ed="2015-03-30T16:49:34Z" ' +
-                'sd="2015-03-01T16:49:34Z" ' +
-                'te="2015-03-30T16:49:34Z" ' +
+                'ad="' + start.toISOString() + '" ' +
+                'ed="' + end.toISOString() + '" ' +
+                'sd="' + start.toISOString() + '" ' +
+                'te="' + end.toISOString() + '" ' +
                 'test="true"' +
                 '/>' +
                 '<d>VNNAnf36IrkyUVZlihQJNdUUZl/YFEfJOeldWBtd3IM=</d>' +
